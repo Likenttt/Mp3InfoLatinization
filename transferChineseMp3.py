@@ -59,7 +59,7 @@ if not os.path.isdir(dest):
 
 if os.path.isdir(path):
     print("批量文件转换～")
-batchTransfer(path,dest)
+    batchTransfer(path,dest)
 elif os.path.isfile(path):
     print("单个文件转换～")
     #获取文件名
