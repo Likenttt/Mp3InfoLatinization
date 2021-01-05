@@ -1,0 +1,1 @@
+python3 transferChineseMp3.py /Users/lichuanyi/Documents/Mp3InfoLatinization/test_src/01\ 黑色香水.mp3 /Users/lichuanyi/Documents/Mp3InfoLatinization/test_dest

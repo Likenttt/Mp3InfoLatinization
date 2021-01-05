@@ -6,38 +6,45 @@ from pypinyin import lazy_pinyin
 from sys import exit
 
 
-def batchTransfer(path,dest):
-    #文件名列表而已
+def batchTransfer(path, dest):
+    # Get all file names in folder. Variable files is Like ['透明对白.mp3','稻草人.mp3']
+    if os.path.exists(dest):
+        shutil.rmtree(dest)
+    shutil.copytree(path, dest)
     files = os.listdir(dest)
-    shutil.copytree(path,dest)
     for file in files:
-        transfer(file,dest)
+        transfer(file, dest)
 
-def transfer(file,dest):
-    tp = file[-3:]
-    if tp != "mp3":
-        print("文件不是一个有效的mp3文件～")
+
+def transfer(file, dest):
+    suffix = file[-4:]
+    if suffix != ".mp3":
+        print("Not valid mp3 format～")
         exit(1)
     filename = file[:-4]
-    print("当前处理的文件"+filename)
-    # os.rename(file, "tst.mp3")
-    #audio = eyed3.load(path+"\\"+file)
-    audio = EasyID3(dest + os.sep+ file)
-    if audio['title'] is not None and audio['title'] !='' and containsCHNCharacters(audio['title']):
-        title_array = lazy_pinyin(audio['title'])
+    print("Current file:" + filename)
+    audio = EasyID3(dest + os.sep + file)
+    print(audio)
+    # Notice： audio['title'] is a list
+    title = audio['title'][0]
+    artist = audio['artist'][0]
+    album = audio['album'][0]
+    if title is not None and title != '' and containsCHNCharacters(title):
+        title_array = lazy_pinyin(title)
         # 别来无恙 -> Bie Lai Wu Yang -> Bie Lai Wu Yang
         audio['title'] = ' '.join(title_array).title().replace(" ", "")
-    if audio['artist'] is not None and audio['artist'] !='' and containsCHNCharacters(audio['artist']):
-        artist_array = lazy_pinyin(audio['artist'])
+        print("audio['title']:" + title)
+    if artist is not None and artist != '' and containsCHNCharacters(artist):
+        artist_array = lazy_pinyin(artist)
         audio['artist'] = ' '.join(artist_array).title().replace(" ", "")
-    if audio['album'] is not None and audio['album'] !='' and containsCHNCharacters(audio['album']):
-        album_array = lazy_pinyin(audio['album'])
+    if album is not None and album != '' and containsCHNCharacters(album):
+        album_array = lazy_pinyin(album)
         audio['album'] = ' '.join(album_array).title().replace(" ", "")
     audio.save()
-    if file is not None and file !='' and containsCHNCharacters(file):
-        file_array = lazy_pinyin(file)
+    if filename is not None and filename != '' and containsCHNCharacters(filename):
+        file_array = lazy_pinyin(filename)
         new_file = ' '.join(file_array).title().replace(" ", "")
-        os.rename(dest + os.sep+ file,dest + os.sep+new_file)
+        os.rename(dest + os.sep + file, dest + os.sep + new_file + suffix)
 
 
 def containsCHNCharacters(word):
@@ -46,26 +53,22 @@ def containsCHNCharacters(word):
             return True
     return False
 
-# 接收一个路径参数然后将mp3的信息修改后写回
+
 if len(sys.argv) < 3:
-  print("参数长度非法")
-  exit(1)
+    print("Invalid parameter array~ parameters insufficient")
+    exit(1)
 path = sys.argv[1]
 dest = sys.argv[2]
 print(sys.argv)
-if not os.path.isdir(dest):
-    print("目标路径必须是一个文件夹～")
-    exit(1)
-
 if os.path.isdir(path):
-    print("批量文件转换～")
-    batchTransfer(path,dest)
+    print("Batch～")
+    batchTransfer(path, dest)
 elif os.path.isfile(path):
-    print("单个文件转换～")
-    #获取文件名
+    print("Single file～")
+    # 获取文件名
     file = os.path.basename(path)
-    shutil.copyfile(path,dest+os.sep+file)
-    transfer(file,dest)
+    shutil.copyfile(path, dest + os.sep + file)
+    transfer(file, dest)
 else:
     print("路径非法")
     exit(1)
