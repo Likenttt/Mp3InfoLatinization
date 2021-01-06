@@ -35,3 +35,12 @@ This project works well MacOs10.15.6(python3.7.6) without test on any other plat
    FLAC, MP4, Monkey's Audio, MP3, Musepack, Ogg Opus, Ogg FLAC, Ogg Speex, Ogg Theora, Ogg Vorbis, True Audio, WavPack,
    OptimFROG, and AIFF audio files.
 2. [pypinyin](https://github.com/mozillazg/python-pinyin) Convert Chinese characters to pinyin
+
+## Amazing Garmin App Gallery
+
+1. [SubMusic](https://apps.garmin.com/en-US/apps/600bd75f-6ccf-4ca5-bc7a-0a4fcfdcf794)
+![SubMusic](images/submusic.png)
+   
+Source code:[SubMusic Github](https://github.com/memen45/SubMusic)
+   
+2. 
