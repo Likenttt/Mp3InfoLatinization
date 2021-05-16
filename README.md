@@ -42,5 +42,3 @@ This project works well MacOs10.15.6(python3.7.6) without test on any other plat
 ![SubMusic](images/submusic.png)
    
 Source code:[SubMusic Github](https://github.com/memen45/SubMusic)
-   
-2. 
